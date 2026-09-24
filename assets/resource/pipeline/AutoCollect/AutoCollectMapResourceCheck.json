@@ -1,0 +1,270 @@
+{
+    "AutoCollectMapResourceDigCheckStart": {
+        "desc": "打开大地图读取当前路线的打击型矿物余量",
+        "recognition": "DirectHit",
+        "action": "Custom",
+        "custom_action": "SubTask",
+        "custom_action_param": {
+            "sub": [
+                "SceneEnterMapAny"
+            ],
+            "strict": true
+        },
+        "next": [
+            "AutoCollectMapResourceDigCheckReady"
+        ]
+    },
+    "AutoCollectMapResourceDigCheckReady": {
+        "desc": "确认大地图已打开",
+        "recognition": "And",
+        "all_of": [
+            "InMapAny"
+        ],
+        "action": "DoNothing",
+        "next": [
+            "AutoCollectMapResourceDigCheckIcon"
+        ],
+        "on_error": [
+            "AutoCollectMapResourceDigProbeFailed"
+        ]
+    },
+    "AutoCollectMapResourceDigCheckIcon": {
+        "desc": "在当前路线指定范围内定位打击型矿物图标",
+        "recognition": "TemplateMatch",
+        "roi": [
+            560,
+            240,
+            160,
+            160
+        ],
+        "template": "AutoCollect/MapResourceDigIcon.png",
+        "threshold": 0.8,
+        "action": "Click",
+        "timeout": 1500,
+        "next": [
+            "AutoCollectMapResourceDigQuantity"
+        ],
+        "on_error": [
+            "AutoCollectMapResourceDigProbeFailed"
+        ]
+    },
+    "AutoCollectMapResourceDigQuantity": {
+        "desc": "读取打击型矿物图标旁的余量数字",
+        "recognition": "OCR",
+        "roi": "AutoCollectMapResourceDigCheckIcon",
+        "roi_offset": [
+            0,
+            -10,
+            180,
+            80
+        ],
+        "expected": "^(\\d+)$",
+        "only_rec": true,
+        "timeout": 1500,
+        "next": [
+            "AutoCollectMapResourceDigProbeCompleted"
+        ],
+        "on_error": [
+            "AutoCollectMapResourceDigProbeFailed"
+        ]
+    },
+    "AutoCollectMapResourceDigProbeCompleted": {
+        "desc": "完成打击型矿物余量读取并返回世界界面",
+        "recognition": "DirectHit",
+        "action": "Custom",
+        "custom_action": "SubTask",
+        "custom_action_param": {
+            "sub": [
+                "SceneAnyEnterWorld"
+            ],
+            "strict": true
+        },
+        "next": [
+            "[Anchor]AutoCollectMapResourceDigProbeNext"
+        ]
+    },
+    "AutoCollectMapResourceDigProbeFailed": {
+        "desc": "当前路线的打击型矿物余量读取失败并返回世界界面",
+        "recognition": "DirectHit",
+        "action": "Custom",
+        "custom_action": "SubTask",
+        "custom_action_param": {
+            "sub": [
+                "SceneAnyEnterWorld"
+            ],
+            "strict": true
+        },
+        "next": [
+            "[Anchor]AutoCollectMapResourceDigProbeFailed"
+        ]
+    },
+    "AutoCollectMapResourceDigDecision": {
+        "desc": "判断打击型矿物余量是否达到当前路线要求",
+        "recognition": "DirectHit",
+        "action": "DoNothing",
+        "next": [
+            "AutoCollectMapResourceDigEnough",
+            "AutoCollectMapResourceDigInsufficient"
+        ]
+    },
+    "AutoCollectMapResourceDigEnough": {
+        "desc": "打击型矿物余量达到要求",
+        "recognition": "Custom",
+        "custom_recognition": "ExpressionRecognition",
+        "custom_recognition_param": {
+            "expression": "{AutoCollectMapResourceDigQuantity}>{AutoCollectMapResourceDigMinimum}",
+            "focus_matched_resolved_expression": true
+        },
+        "action": "DoNothing",
+        "next": [
+            "[Anchor]AutoCollectMapResourceDigDecisionContinue"
+        ]
+    },
+    "AutoCollectMapResourceDigInsufficient": {
+        "desc": "打击型矿物余量未达到要求",
+        "recognition": "Custom",
+        "custom_recognition": "ExpressionRecognition",
+        "custom_recognition_param": {
+            "expression": "!({AutoCollectMapResourceDigQuantity}>{AutoCollectMapResourceDigMinimum})",
+            "focus_matched_resolved_expression": true
+        },
+        "action": "DoNothing",
+        "next": [
+            "[Anchor]AutoCollectMapResourceDigDecisionSkip"
+        ]
+    },
+    "AutoCollectMapResourceCollectCheckStart": {
+        "desc": "打开大地图读取当前路线的F键收集型矿物余量",
+        "recognition": "DirectHit",
+        "action": "Custom",
+        "custom_action": "SubTask",
+        "custom_action_param": {
+            "sub": [
+                "SceneEnterMapAny"
+            ],
+            "strict": true
+        },
+        "next": [
+            "AutoCollectMapResourceCollectCheckReady"
+        ]
+    },
+    "AutoCollectMapResourceCollectCheckReady": {
+        "desc": "确认大地图已打开",
+        "recognition": "And",
+        "all_of": [
+            "InMapAny"
+        ],
+        "action": "DoNothing",
+        "next": [
+            "AutoCollectMapResourceCollectCheckIcon"
+        ],
+        "on_error": [
+            "AutoCollectMapResourceCollectProbeFailed"
+        ]
+    },
+    "AutoCollectMapResourceCollectCheckIcon": {
+        "desc": "在当前路线指定范围内定位F键收集型矿物图标",
+        "recognition": "TemplateMatch",
+        "roi": [
+            560,
+            240,
+            160,
+            160
+        ],
+        "template": "AutoCollect/MapResourceCollectIcon.png",
+        "threshold": 0.8,
+        "action": "Click",
+        "timeout": 1500,
+        "next": [
+            "AutoCollectMapResourceCollectQuantity"
+        ],
+        "on_error": [
+            "AutoCollectMapResourceCollectProbeFailed"
+        ]
+    },
+    "AutoCollectMapResourceCollectQuantity": {
+        "desc": "读取F键收集型矿物图标旁的余量数字",
+        "recognition": "OCR",
+        "roi": "AutoCollectMapResourceCollectCheckIcon",
+        "roi_offset": [
+            0,
+            -10,
+            180,
+            80
+        ],
+        "expected": "^(\\d+)$",
+        "only_rec": true,
+        "timeout": 1500,
+        "next": [
+            "AutoCollectMapResourceCollectProbeCompleted"
+        ],
+        "on_error": [
+            "AutoCollectMapResourceCollectProbeFailed"
+        ]
+    },
+    "AutoCollectMapResourceCollectProbeCompleted": {
+        "desc": "完成F键收集型矿物余量读取并返回世界界面",
+        "recognition": "DirectHit",
+        "action": "Custom",
+        "custom_action": "SubTask",
+        "custom_action_param": {
+            "sub": [
+                "SceneAnyEnterWorld"
+            ],
+            "strict": true
+        },
+        "next": [
+            "[Anchor]AutoCollectMapResourceCollectProbeNext"
+        ]
+    },
+    "AutoCollectMapResourceCollectProbeFailed": {
+        "desc": "当前路线的F键收集型矿物余量读取失败并返回世界界面",
+        "recognition": "DirectHit",
+        "action": "Custom",
+        "custom_action": "SubTask",
+        "custom_action_param": {
+            "sub": [
+                "SceneAnyEnterWorld"
+            ],
+            "strict": true
+        },
+        "next": [
+            "[Anchor]AutoCollectMapResourceCollectProbeFailed"
+        ]
+    },
+    "AutoCollectMapResourceCollectDecision": {
+        "desc": "判断F键收集型矿物余量是否达到当前路线要求",
+        "recognition": "DirectHit",
+        "action": "DoNothing",
+        "next": [
+            "AutoCollectMapResourceCollectEnough",
+            "AutoCollectMapResourceCollectInsufficient"
+        ]
+    },
+    "AutoCollectMapResourceCollectEnough": {
+        "desc": "F键收集型矿物余量达到要求",
+        "recognition": "Custom",
+        "custom_recognition": "ExpressionRecognition",
+        "custom_recognition_param": {
+            "expression": "{AutoCollectMapResourceCollectQuantity}>{AutoCollectMapResourceCollectMinimum}",
+            "focus_matched_resolved_expression": true
+        },
+        "action": "DoNothing",
+        "next": [
+            "[Anchor]AutoCollectMapResourceCollectDecisionContinue"
+        ]
+    },
+    "AutoCollectMapResourceCollectInsufficient": {
+        "desc": "F键收集型矿物余量未达到要求",
+        "recognition": "Custom",
+        "custom_recognition": "ExpressionRecognition",
+        "custom_recognition_param": {
+            "expression": "!({AutoCollectMapResourceCollectQuantity}>{AutoCollectMapResourceCollectMinimum})",
+            "focus_matched_resolved_expression": true
+        },
+        "action": "DoNothing",
+        "next": [
+            "[Anchor]AutoCollectMapResourceCollectDecisionSkip"
+        ]
+    }
+}

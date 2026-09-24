@@ -32,10 +32,29 @@
                 11
             ]
         },
-        "action": "DoNothing",
+        "action": "Custom",
         "next": [
-            "AutoCollectRoute16GotoInteractSub"
-        ]
+            "AutoCollectMapResourceDigCheckStart"
+        ],
+        "custom_action": "PipelineOverride",
+        "custom_action_param": {
+            "patch": {
+                "AutoCollectMapResourceDigCheckIcon": {
+                    "roi": [
+                        560,
+                        240,
+                        160,
+                        160
+                    ]
+                }
+            }
+        },
+        "anchor": {
+            "AutoCollectMapResourceDigProbeNext": "AutoCollectMapResourceDigDecision",
+            "AutoCollectMapResourceDigProbeFailed": "AutoCollectRoute16End",
+            "AutoCollectMapResourceDigDecisionContinue": "AutoCollectRoute16GotoInteractSub",
+            "AutoCollectMapResourceDigDecisionSkip": "AutoCollectRoute16End"
+        }
     },
     "AutoCollectRoute16GotoInteractSub": {
         "action": "Custom",

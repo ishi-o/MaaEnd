@@ -33,10 +33,29 @@
                 20
             ]
         },
-        "action": "DoNothing",
+        "action": "Custom",
         "next": [
-            "AutoCollectRoute11Goto1"
-        ]
+            "AutoCollectMapResourceDigCheckStart"
+        ],
+        "custom_action": "PipelineOverride",
+        "custom_action_param": {
+            "patch": {
+                "AutoCollectMapResourceDigCheckIcon": {
+                    "roi": [
+                        560,
+                        240,
+                        160,
+                        160
+                    ]
+                }
+            }
+        },
+        "anchor": {
+            "AutoCollectMapResourceDigProbeNext": "AutoCollectMapResourceDigDecision",
+            "AutoCollectMapResourceDigProbeFailed": "AutoCollectRoute11End",
+            "AutoCollectMapResourceDigDecisionContinue": "AutoCollectRoute11Goto1",
+            "AutoCollectMapResourceDigDecisionSkip": "AutoCollectRoute11End"
+        }
     },
     "AutoCollectRoute11Goto1": {
         "desc": "前往采集点",

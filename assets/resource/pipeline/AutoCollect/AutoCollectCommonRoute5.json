@@ -40,10 +40,29 @@
                 20
             ]
         },
-        "action": "DoNothing",
+        "action": "Custom",
         "next": [
-            "AutoCollectCommonRoute5Goto"
-        ]
+            "AutoCollectMapResourceCollectCheckStart"
+        ],
+        "custom_action": "PipelineOverride",
+        "custom_action_param": {
+            "patch": {
+                "AutoCollectMapResourceCollectCheckIcon": {
+                    "roi": [
+                        560,
+                        240,
+                        160,
+                        160
+                    ]
+                }
+            }
+        },
+        "anchor": {
+            "AutoCollectMapResourceCollectProbeNext": "AutoCollectMapResourceCollectDecision",
+            "AutoCollectMapResourceCollectProbeFailed": "AutoCollectCommonRoute5End",
+            "AutoCollectMapResourceCollectDecisionContinue": "AutoCollectCommonRoute5Goto",
+            "AutoCollectMapResourceCollectDecisionSkip": "AutoCollectCommonRoute5End"
+        }
     },
     "AutoCollectCommonRoute5Goto": {
         "desc": "前往采集点",

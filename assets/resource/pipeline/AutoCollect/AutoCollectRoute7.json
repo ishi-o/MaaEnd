@@ -33,10 +33,37 @@
                 20
             ]
         },
-        "action": "DoNothing",
+        "action": "Custom",
         "next": [
-            "AutoCollectRoute7Goto1"
-        ]
+            "AutoCollectMapResourceCollectCheckStart"
+        ],
+        "custom_action": "PipelineOverride",
+        "custom_action_param": {
+            "patch": {
+                "AutoCollectMapResourceCollectCheckIcon": {
+                    "roi": [
+                        560,
+                        240,
+                        160,
+                        160
+                    ]
+                },
+                "AutoCollectMapResourceDigCheckIcon": {
+                    "roi": [
+                        720,
+                        240,
+                        160,
+                        160
+                    ]
+                }
+            }
+        },
+        "anchor": {
+            "AutoCollectMapResourceCollectProbeNext": "AutoCollectMapResourceDigCheckStart",
+            "AutoCollectMapResourceCollectProbeFailed": "AutoCollectRoute7End",
+            "AutoCollectMapResourceDigProbeNext": "AutoCollectRoute7Goto1",
+            "AutoCollectMapResourceDigProbeFailed": "AutoCollectRoute7End"
+        }
     },
     "AutoCollectRoute7Goto1": {
         "desc": "前往采集点",
@@ -88,8 +115,12 @@
         },
         "action": "DoNothing",
         "next": [
-            "AutoCollectRoute7Goto2"
-        ]
+            "AutoCollectMapResourceCollectDecision"
+        ],
+        "anchor": {
+            "AutoCollectMapResourceCollectDecisionContinue": "AutoCollectRoute7Goto2",
+            "AutoCollectMapResourceCollectDecisionSkip": "AutoCollectRoute7GotoFindLine4Sub"
+        }
     },
     "AutoCollectRoute7Goto2": {
         "desc": "前往采集点",
@@ -364,8 +395,12 @@
         },
         "action": "DoNothing",
         "next": [
-            "AutoCollectRoute7Goto5"
-        ]
+            "AutoCollectMapResourceDigDecision"
+        ],
+        "anchor": {
+            "AutoCollectMapResourceDigDecisionContinue": "AutoCollectRoute7Goto5",
+            "AutoCollectMapResourceDigDecisionSkip": "AutoCollectRoute7End"
+        }
     },
     "AutoCollectRoute7Goto5": {
         "desc": "前往采集点",

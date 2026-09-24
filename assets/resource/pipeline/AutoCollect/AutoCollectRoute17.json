@@ -32,10 +32,29 @@
                 16.67
             ]
         },
-        "action": "DoNothing",
+        "action": "Custom",
         "next": [
-            "AutoCollectRoute17Goto"
-        ]
+            "AutoCollectMapResourceCollectCheckStart"
+        ],
+        "custom_action": "PipelineOverride",
+        "custom_action_param": {
+            "patch": {
+                "AutoCollectMapResourceCollectCheckIcon": {
+                    "roi": [
+                        560,
+                        240,
+                        160,
+                        160
+                    ]
+                }
+            }
+        },
+        "anchor": {
+            "AutoCollectMapResourceCollectProbeNext": "AutoCollectMapResourceCollectDecision",
+            "AutoCollectMapResourceCollectProbeFailed": "AutoCollectRoute17End",
+            "AutoCollectMapResourceCollectDecisionContinue": "AutoCollectRoute17Goto",
+            "AutoCollectMapResourceCollectDecisionSkip": "AutoCollectRoute17End"
+        }
     },
     "AutoCollectRoute17Goto": {
         "desc": "前往采集点",

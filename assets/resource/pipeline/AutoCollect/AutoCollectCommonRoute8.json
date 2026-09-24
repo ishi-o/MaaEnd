@@ -40,10 +40,29 @@
                 20
             ]
         },
-        "action": "DoNothing",
+        "action": "Custom",
         "next": [
-            "AutoCollectCommonRoute8Goto"
-        ]
+            "AutoCollectMapResourceCollectCheckStart"
+        ],
+        "custom_action": "PipelineOverride",
+        "custom_action_param": {
+            "patch": {
+                "AutoCollectMapResourceCollectCheckIcon": {
+                    "roi": [
+                        560,
+                        240,
+                        160,
+                        160
+                    ]
+                }
+            }
+        },
+        "anchor": {
+            "AutoCollectMapResourceCollectProbeNext": "AutoCollectMapResourceCollectDecision",
+            "AutoCollectMapResourceCollectProbeFailed": "AutoCollectCommonRoute8End",
+            "AutoCollectMapResourceCollectDecisionContinue": "AutoCollectCommonRoute8Goto",
+            "AutoCollectMapResourceCollectDecisionSkip": "AutoCollectCommonRoute8End"
+        }
     },
     "AutoCollectCommonRoute8Goto": {
         "desc": "前往金石稻采集点",

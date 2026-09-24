@@ -18,6 +18,7 @@
                 "AutoCollectValleyIV",
                 "AutoCollectWuling",
                 "AutoCollectMode",
+                "AutoCollectMapResourceThreshold",
                 "AutoCollectStashBackpackSubTask"
             ],
             "group": [
@@ -398,6 +399,54 @@
                     ]
                 }
             ]
+        },
+        "AutoCollectMapResourceThreshold": {
+            "type": "input",
+            "label": "$option.AutoCollectMapResourceThreshold.label",
+            "inputs": [
+                {
+                    "name": "AutoCollectMapResourceDigMinimum",
+                    "label": "$option.AutoCollectMapResourceThreshold.inputs.dig.label",
+                    "pipeline_type": "int",
+                    "default": "1",
+                    "verify": "^\\d+$",
+                    "pattern_msg": "$option.AutoCollectMapResourceThreshold.pattern_msg"
+                },
+                {
+                    "name": "AutoCollectMapResourceCollectMinimum",
+                    "label": "$option.AutoCollectMapResourceThreshold.inputs.collect.label",
+                    "pipeline_type": "int",
+                    "default": "1",
+                    "verify": "^\\d+$",
+                    "pattern_msg": "$option.AutoCollectMapResourceThreshold.pattern_msg"
+                }
+            ],
+            "pipeline_override": {
+                "AutoCollectMapResourceDigEnough": {
+                    "custom_recognition_param": {
+                        "expression": "{AutoCollectMapResourceDigQuantity}>{AutoCollectMapResourceDigMinimum}",
+                        "focus_matched_resolved_expression": true
+                    }
+                },
+                "AutoCollectMapResourceDigInsufficient": {
+                    "custom_recognition_param": {
+                        "expression": "!({AutoCollectMapResourceDigQuantity}>{AutoCollectMapResourceDigMinimum})",
+                        "focus_matched_resolved_expression": true
+                    }
+                },
+                "AutoCollectMapResourceCollectEnough": {
+                    "custom_recognition_param": {
+                        "expression": "{AutoCollectMapResourceCollectQuantity}>{AutoCollectMapResourceCollectMinimum}",
+                        "focus_matched_resolved_expression": true
+                    }
+                },
+                "AutoCollectMapResourceCollectInsufficient": {
+                    "custom_recognition_param": {
+                        "expression": "!({AutoCollectMapResourceCollectQuantity}>{AutoCollectMapResourceCollectMinimum})",
+                        "focus_matched_resolved_expression": true
+                    }
+                }
+            }
         },
         "AutoCollectTargetInventory": {
             "type": "input",
